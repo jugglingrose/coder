@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+</head>
+<body>
+  <div id="log"></div>
+</body>
+
+<script>
+
+function log(data){
+  document.getElementById('log').innerHTML += data;
+}
+
+
+//websocket//
+var ws = new WebSocket('ws://localhost:3000/');
+
+ws.onopen = function() {
+  log('connect');
+};
+ws.onclose = function() {
+  log('closed');
+};
+ws.onmessage = function(event){
+  log(event.data);
+  return false;
+};
+
+</script>
+
+</html>

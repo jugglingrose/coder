@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for ((COUNT = 0; COUNT < 10; COUNT++)); do
+  echo $((RANDOM%10));
+  sleep 1
+done
