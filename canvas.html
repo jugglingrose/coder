@@ -11,6 +11,15 @@ function log(data){
   document.getElementById('log').innerHTML += data;
 }
 
+function convertBinary(number){
+  let binary = "";
+  while(number > 0){
+    binary = number%2 + binary;
+    number = Math.floor(number/2);
+  }
+
+  log(binary);
+}
 
 //websocket//
 var ws = new WebSocket('ws://localhost:3000/');
@@ -22,6 +31,7 @@ ws.onclose = function() {
   log('closed');
 };
 ws.onmessage = function(event){
+  convertBinary(event.data);
   log(event.data);
   return false;
 };
