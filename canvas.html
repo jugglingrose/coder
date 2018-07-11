@@ -10,75 +10,77 @@
 
 <script>
 
+//Log binary to screen//
 function log(data){
   document.getElementById('log').innerHTML += data;
 }
 
-/* Decimal to Binary Conversion
-function convertBinary(number){
-  let binary = "";
-  while(number > 0){
-    binary = number%2 + binary;
-    number = Math.floor(number/2);
-  }
-  log(binary);
-}*/
-
-//Decimal to Binary with all 8 bites//
+//Decimal to Binary Conversion with all 8 bites//
 function convertBinary(number){
   let binary = "";
   for(i=0; i<8; i++){
     binary = number % 2 + binary;
     number = Math.floor(number/2);
   }
-
-  /*RGBA(binary);*/
   modCanvas(binary)
 }
 
+//Draw Canvas//
 function modCanvas(data){
   log(data);
-
   let dataArr = [...data];
   console.log(dataArr);
   //grab pixels from canvas//
   const canvas = document.getElementById("myCanvas");
   const ctx = canvas.getContext('2d');
-  let imgdata = ctx.getImageData(0,0, 100, 100);
+  let imgdata = ctx.getImageData(0,0, 40, 40);
   let imgdatalen = imgdata.data.length;
-  let arrLength = dataArr.length;
+
+  //Binary to RGB Pixel//
+  for(var j=0; j<dataArr.length; j++){
+    console.log(dataArr[j]);
+    if(dataArr[j]==='1'){
+      for(var i =0; i<1; i+=4){
+        imgdata.data[4*i] = 0;    // RED (0-255)
+        imgdata.data[4*i+1] = 255;    // GREEN (0-255)
+        imgdata.data[4*i+2] = 0;    // BLUE (0-255)
+        imgdata.data[4*i+3] = 255;
+        }
 
 
-  for(var j=0; j<arrLength; j++){
-    console.log("j has been called");
+      }else if(dataArr[j]==='0'){
+        for(var i = 0; i<1; i+=4){
+          imgdata.data[4*i] = 0;    // RED (0-255)
+          imgdata.data[4*i+1] = 0;    // GREEN (0-255)
+          imgdata.data[4*i+2] = 250;    // BLUE (0-255)
+          imgdata.data[4*i+3] = 0;
+          console.log('zero');
+        }
+          console.log("image data:" + imgdata.data);
+          ctx.putImageData(imgdata,0,0);
+      }
+  }
 
+  /*for(var j=0; j<dataArr.length; j++){
     for(var i=0; i<imgdatalen; i+=4){
-      console.log("i called");
       console.log(dataArr[j]);
-
       if(dataArr[j]==='1'){
         imgdata.data[4*i] = 0;    // RED (0-255)
         imgdata.data[4*i+1] = 255;    // GREEN (0-255)
         imgdata.data[4*i+2] = 0;    // BLUE (0-255)
         imgdata.data[4*i+3] = 0;
         console.log('one');
-
       }else if(dataArr[j]==='0'){
         imgdata.data[4*i] = 255;    // RED (0-255)
         imgdata.data[4*i+1] = 0;    // GREEN (0-255)
         imgdata.data[4*i+2] = 255;    // BLUE (0-255)
         imgdata.data[4*i+3] = 255;
         console.log("zero");
-
-
       }
     }
     ctx.putImageData(imgdata,0,0);
-  }
-
-
+  }*/
 }
-
 
 
 //websocket//
