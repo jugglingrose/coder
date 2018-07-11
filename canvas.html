@@ -14,23 +14,6 @@ function log(data){
   document.getElementById('log').innerHTML += data;
 }
 
-function RGBA(data){
-  console.log("RGBA Called");
-  let a = [...data];
-  console.log(a);
-  let rgbArr = a.map((d)=> {
-    console.log(d);
-    if(d==="1"){
-      console.log("this is a one");
-      return d = [0,0,0];
-    }else{
-      console.log("this is a zero");
-      return d = [255,255,255];
-    }
-  })
-  console.log(rgbArr);
-}
-
 /* Decimal to Binary Conversion
 function convertBinary(number){
   let binary = "";
@@ -48,23 +31,53 @@ function convertBinary(number){
     binary = number % 2 + binary;
     number = Math.floor(number/2);
   }
-  log(binary);
-  RGBA(binary);
+
+  /*RGBA(binary);*/
+  modCanvas(binary)
 }
 
-/*function modCanvas(){
+function modCanvas(data){
+  log(data);
+
+  let dataArr = [...data];
+  console.log(dataArr);
+  //grab pixels from canvas//
   const canvas = document.getElementById("myCanvas");
   const ctx = canvas.getContext('2d');
-  var imgdata = ctx.getImageData(0,0, 100, 800);
-  var imgdatalen = imgdata.data.length;
-  for(var i=0;i<imgdatalen;i++){  //iterate over every pixel in the canvas
-    imgdata.data[4*i] = 255;    // RED (0-255)
-    imgdata.data[4*i+1] = 0;    // GREEN (0-255)
-    imgdata.data[4*i+2] = 0;    // BLUE (0-255)
-    imgdata.data[4*i+3] = 255;  // APLHA (0-255)
+  let imgdata = ctx.getImageData(0,0, 100, 100);
+  let imgdatalen = imgdata.data.length;
+  let arrLength = dataArr.length;
+
+
+  for(var j=0; j<arrLength; j++){
+    console.log("j has been called");
+
+    for(var i=0; i<imgdatalen; i+=4){
+      console.log("i called");
+      console.log(dataArr[j]);
+
+      if(dataArr[j]==='1'){
+        imgdata.data[4*i] = 0;    // RED (0-255)
+        imgdata.data[4*i+1] = 255;    // GREEN (0-255)
+        imgdata.data[4*i+2] = 0;    // BLUE (0-255)
+        imgdata.data[4*i+3] = 0;
+        console.log('one');
+
+      }else if(dataArr[j]==='0'){
+        imgdata.data[4*i] = 255;    // RED (0-255)
+        imgdata.data[4*i+1] = 0;    // GREEN (0-255)
+        imgdata.data[4*i+2] = 255;    // BLUE (0-255)
+        imgdata.data[4*i+3] = 255;
+        console.log("zero");
+
+
+      }
+    }
+    ctx.putImageData(imgdata,0,0);
   }
-  ctx.putImageData(imgdata,0,0);
-}*/
+
+
+}
 
 
 

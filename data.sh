@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for ((COUNT = 0; COUNT < 2; COUNT++)); do
+for ((COUNT = 0; COUNT < 20; COUNT++)); do
   echo $((RANDOM%100));
-  
+
 done
